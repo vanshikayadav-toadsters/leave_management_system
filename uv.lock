@@ -1,0 +1,30 @@
+version = 1
+revision = 3
+requires-python = ">=3.15"
+
+[[package]]
+name = "async"
+version = "0.6.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/47/de/9d8e0907842c56d4cbd64d7543e65f78373d1fe8e9dc33a4324aaea734e9/async-0.6.2.tar.gz", hash = "sha256:ac6894d876e45878faae493b0cf61d0e28ec417334448ac0a6ea2229d8343051", size = 30177, upload-time = "2014-11-12T17:03:40.353Z" }
+
+[[package]]
+name = "jose"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/01/3d/832caa69cd0d3be2d608d8290be2221072669aa88e87690837f6b31c480f/jose-1.0.0.tar.gz", hash = "sha256:8436c3617cd94e1ba97828fbb1ce27c129f66c78fb855b4bb47e122b5f345fba", size = 9153, upload-time = "2015-11-13T10:52:21.506Z" }
+
+[[package]]
+name = "leave-system"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "async" },
+    { name = "jose" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "async", specifier = ">=0.6.2" },
+    { name = "jose", specifier = ">=1.0.0" },
+]
