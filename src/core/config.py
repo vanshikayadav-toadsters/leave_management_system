@@ -1,16 +1,11 @@
-from pydantic import BaseSettings
-
-class Settings(BaseSettings):
-    SECRET_KEY: str
-    ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES:int = int
-    REFRESH_TOKEN_EXPIRE_DAYS:int = int
-    WHITELISTED_DOMAINS:str
-
-    class Config:
-        env_file=".env"
+from src.core.settings import settings
+from src.core.security import JWTManager
 
 
-settings = Settings()
-
-
+def get_jwt_manager() ->  JWTManager:
+    return JWTManager(
+        secret_key=settings.SECRET_KEY,
+        algorithm=settings.ALGORITHM,
+        access_expiry_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES,
+        refresh_expiry_days=settings.REFRESH_TOKEN_EXPIRE_DAYS
+    )
