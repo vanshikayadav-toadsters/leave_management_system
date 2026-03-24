@@ -1,0 +1,24 @@
+from sqlmodel import SQLModel, Field
+from typing import Optional
+from datetime import date
+import uuid
+import enum
+
+class LeaveStatus(str, enum.Enum):
+    PENDING="PENDING"
+    APPROVED="APPROVED"
+    REJECTED="REJECTED"
+
+class Leave(SQLModel, table=True):
+    id:str=Field(
+        default_factory=lambda:str(uuid.uuid4()),
+        primary_key=True
+    )
+
+    user_id: str = Field(foreign_key="user.id", nullable=False)
+
+    start_date: date = Field(nullable=False)
+    end_date:date=Field(nullable=False)
+    reason:Optional[str]=None
+    status: LeaveStatus = Field(default=LeaveStatus.PENDING)
+
