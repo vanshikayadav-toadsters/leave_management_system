@@ -15,38 +15,42 @@ class JWTManager:
         self.refresh_expiry_days=refresh_expiry_days
 
 
-def create_access_token(self,data:dict):
-    to_encode=data.copy()
+    def create_access_token(self,data:dict):
+        to_encode=data.copy()
 
-    expire=datetime.utcnow() + timedelta(
-        minutes=self.access_expiry_minutes
-    )
-
-    to_encode.update({"exp":expire , "type":"access"})
-
-    return jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
-
-
-def create_refresh_token(self,data:dict):
-    to_encode=data.copy()
-
-    expire=datetime.utcnow + timedelta(
-        days=self.refresh_expiry_days
-    )
-
-    to_encode.update({"exp":expire, "type":"refresh"})
-
-    return jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
-
-def decode_token(self , token:str):
-    try:
-        payload=jwt.decode(
-            token,
-            self.secret_key,
-            algorithm=self.algorithm
+        expire=datetime.utcnow() + timedelta(
+            minutes=self.access_expiry_minutes
         )
 
-        return payload
-    
-    except JWTError:
-        raise Exception("Invalid or expired token ")
+        to_encode.update({"exp":expire , "type":"access"})
+
+        return jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
+
+
+    def create_refresh_token(self,data:dict):
+        to_encode=data.copy()
+
+        expire=datetime.utcnow() + timedelta(
+            days=self.refresh_expiry_days
+        )
+
+        to_encode.update({"exp":expire, "type":"refresh"})
+
+        return jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
+
+    def decode_token(self , token:str):
+        try:
+            payload = jwt.decode(
+                token,
+                self.secret_key,
+                algorithms=[self.algorithm]
+            )
+            
+
+            return payload
+
+        # except JWTError:
+        except Exception as e:
+            
+            
+            raise Exception("Invalid or expired token ")
